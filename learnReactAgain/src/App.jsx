@@ -1,6 +1,5 @@
-import reactLogo from './assets/react.svg'
 import './App.css'
-import { useState } from 'react'
+import { React, useState } from 'react'
 
 function App() {
   const [items, setItems] = useState([
@@ -13,9 +12,11 @@ function App() {
   return (
     <>
       <ul>
-        {items.map((item)=()=>(
+        {items.map((item)=>(
           <li className='item'>
-            <input type={item.item} name={item.item} id={id} />
+            <input type={item.item} key={item.id} />
+            <label htmlFor="item.item"></label>
+            <button>Delete</button>
           </li>
         ))}
       </ul>
