@@ -1,6 +1,8 @@
 import './App.css'
 import { React, useState } from 'react'
 import {FaTrashAlt} from 'react-icons/fa'
+import Header from './Header'
+import Footer from './Footer'
 
 function App() {
   const [items, setItems] = useState([
@@ -25,6 +27,7 @@ function App() {
 
   return (
     <>
+    <Header title={"sdfsdf"}></Header>
     {items.length? 
       <ul>
       {items.map((item)=>(
@@ -44,7 +47,9 @@ function App() {
     </ul>     
      : <p>list is empty</p> 
   }
-
+<Footer>
+  <p>{boo}</p>
+</Footer>
     </>
   )
 }
