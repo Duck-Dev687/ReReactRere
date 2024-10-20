@@ -3,15 +3,13 @@ import { React, useState } from 'react'
 import {FaTrashAlt} from 'react-icons/fa'
 import Header from './Header'
 import AddItem from './AddItem'
+import SearchItem from './SearchItem'
 
 function App() {
-  const [items, setItems] = useState([
-    {id:11 ,item: "item1", checked:true,},
-    {id:22,item: "item2", checked:false,},
-    {id:33,item: "item3", checked:true,},
-  ])
-  
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('shoppingList')))
   const [newItem, setNewItem] = useState('')
+  const [search, setSearch] = useState('')
+
 
   const setAndSaveItems = (newItems)=>{
     setItems(newItems)
@@ -29,6 +27,7 @@ function App() {
   const handleSubmmition = (e) =>{
     e.preventDefault();
     if(!newItem) return;
+    addItem(newItem)
     setNewItem('')
 
   }
@@ -45,12 +44,19 @@ function App() {
 
   return (
     <>
-    <Header title={"sdfsdf"}></Header>
+    <Header title={"To Do for Day!"}></Header>
+
     <AddItem
     newItem={newItem}
     setNewItem={setNewItem}
     handleSubmmition={handleSubmmition}
     ></AddItem>
+
+<SearchItem
+    search={search}
+    setSearch={setSearch}
+    
+    ></SearchItem>
 
     {items.length? 
       <ul>
