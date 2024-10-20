@@ -6,9 +6,14 @@ import AddItem from './AddItem';
 import SearchItem from './SearchItem';
 
 function App() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem('shoppingList')) || [] );
+  const API_URL = 'http://localhost:3500/items'
+
+
+  const [items, setItems] = useState( [] );
   const [newItem, setNewItem] = useState('');
   const [search, setSearch] = useState('');
+  const [fetchError, setFetchError]= useState(null);
+  const [isLoading, setIsLoading] = useState(true)
 
 /*   
 
@@ -29,8 +34,28 @@ function App() {
 */
 
   useEffect(()=>{
-    localStorage.setItem('shoppingList' , JSON.stringify(items)) 
-  },[items])
+     
+    const fetchItems=async()=>{
+      try{
+        const response = await fetch(API_URL)
+        if(!response.ok) throw Error("Didn't receive expected data")
+        const listItems = await response.json()
+        console.log(listItems)
+        setItems(listItems)
+        setFetchError(null)
+      } catch(err){
+        setFetchError(err.message)
+      }
+    }
+
+    setTimeout(()=>{
+      fetchItems()
+    }, 2000)
+
+    // (async () => await fetchItems())()
+
+
+  },[])
     
 
   const addItem = (item) => {
@@ -72,32 +97,41 @@ function App() {
         setSearch={setSearch}
       />
 
-      {filteredItems.length ? (
-        <ul>
-          {filteredItems.map((item) => (
-            <li className='item' key={item.id}>
-              <input
-                type='checkbox'
-                checked={item.checked}
-                onChange={() => handleCheck(item.id)}
-              />
-              <label
-                style={item.checked ? { textDecoration: 'line-through' } : null}
-                onDoubleClick={() => handleCheck(item.id)}
-              >
-                {item.item}
-              </label>
-              <FaTrashAlt
-                onClick={() => handleDelete(item.id)}
-                role="button"
-                tabIndex="0"
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No items found</p>
-      )}
+
+<main>
+    {fetchError ? (
+        <p style={{color: "red"}}>{`Error: ${fetchError}`}</p>
+    ) : (
+        filteredItems.length ? (
+            <ul>
+                {filteredItems.map((item) => (
+                    <li className='item' key={item.id}>
+                        <input
+                            type='checkbox'
+                            checked={item.checked}
+                            onChange={() => handleCheck(item.id)}
+                        />
+                        <label
+                            style={item.checked ? { textDecoration: 'line-through' } : null}
+                            onDoubleClick={() => handleCheck(item.id)}
+                        >
+                            {item.item}
+                        </label>
+                        <FaTrashAlt
+                            onClick={() => handleDelete(item.id)}
+                            role="button"
+                            tabIndex="0"
+                        />
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p>No items found</p>
+        )
+    )}
+</main>
+
+
     </>
   );
 }
