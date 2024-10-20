@@ -13,29 +13,44 @@ function App() {
   
   const [newItem, setNewItem] = useState('')
 
+  const setAndSaveItems = (newItems)=>{
+    setItems(newItems)
+    localStorage.setItem('shoppingList', JSON.stringify(newItems))
+  }
+
+
+  const addItem = (item) =>{
+    const id = items.length ? items[items.length-1].id + 1: 1
+    const myNewItem = {id, checked:false, item}
+    const listItems = [...items, myNewItem];
+    setAndSaveItems(listItems)
+  }
+
   const handleSubmmition = (e) =>{
-  alert("submitted!")
+    e.preventDefault();
+    if(!newItem) return;
+    setNewItem('')
 
   }
 
   const handleCheck = (id) =>{
     const listItems = items.map(item => item.id === id? {...item, checked: !item.checked} : item)
-
-    setItems(listItems)
-
-    localStorage.setItem('shoppingList', JSON.stringify(listItems))
+    setAndSaveItems(listItems)
   }
   
   const handleDelete=(id)=>{
     const listItems = items.filter((item)=>id !== item.id )
-
-    setItems(listItems)
+    setAndSaveItems(listItems)
   }
 
   return (
     <>
     <Header title={"sdfsdf"}></Header>
-    <AddItem></AddItem>
+    <AddItem
+    newItem={newItem}
+    setNewItem={setNewItem}
+    handleSubmmition={handleSubmmition}
+    ></AddItem>
 
     {items.length? 
       <ul>
