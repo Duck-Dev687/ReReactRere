@@ -6,7 +6,7 @@ import AddItem from './AddItem';
 import SearchItem from './SearchItem';
 
 function App() {
-  const [items, setItems] = useState(JSON.parse(localStorage.getItem('shoppingList')) || []);
+  const [items, setItems] = useState(JSON.parse(localStorage.getItem('shoppingList')) || [] );
   const [newItem, setNewItem] = useState('');
   const [search, setSearch] = useState('');
 
@@ -21,27 +21,23 @@ function App() {
   useEffect(()=>{
     console.log("load")
   }, [])
-  
+
+    // run every time the dependecies change
+  useEffect(()=>{
+    console.log("dependecy change")
+  }, [items])
 */
 
-  console.log("before useEffect")
-  // run every time the dependecies change
   useEffect(()=>{
-    console.log("inside useEffect")
-    }, [items])
+    localStorage.setItem('shoppingList' , JSON.stringify(items)) 
+  },[items])
     
-  console.log("after useEffect")
 
-
-  const setAndSaveItems = (newItems) => {
-    setItems(newItems);
-    localStorage.setItem('shoppingList', JSON.stringify(newItems));
-  };
   const addItem = (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
   const handleSubmmition = (e) => {
     e.preventDefault();
@@ -51,11 +47,11 @@ function App() {
   };
   const handleCheck = (id) => {
     const listItems = items.map(item => item.id === id ? { ...item, checked: !item.checked } : item);
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
   const handleDelete = (id) => {
     const listItems = items.filter((item) => id !== item.id);
-    setAndSaveItems(listItems);
+    setItems(listItems);
   };
   const filteredItems = items.filter((item) => 
     item.item.toLowerCase().includes(search.toLowerCase())
