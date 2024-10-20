@@ -40,11 +40,12 @@ function App() {
         const response = await fetch(API_URL)
         if(!response.ok) throw Error("Didn't receive expected data")
         const listItems = await response.json()
-        console.log(listItems)
         setItems(listItems)
         setFetchError(null)
       } catch(err){
         setFetchError(err.message)
+      } finally{
+        setIsLoading(false)
       }
     }
 
@@ -99,10 +100,12 @@ function App() {
 
 
 <main>
-    {fetchError ? (
-        <p style={{color: "red"}}>{`Error: ${fetchError}`}</p>
+    {isLoading && <p>Loading Items...</p>}
+
+    {!isLoading && fetchError ? (
+        <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>
     ) : (
-        filteredItems.length ? (
+        !isLoading && (filteredItems.length ? (
             <ul>
                 {filteredItems.map((item) => (
                     <li className='item' key={item.id}>
@@ -127,9 +130,10 @@ function App() {
             </ul>
         ) : (
             <p>No items found</p>
-        )
+        ))
     )}
 </main>
+
 
 
     </>
