@@ -1,0 +1,19 @@
+{
+    "items":[
+        {
+            "id": 1,
+            "checked": false,
+            "item": "Day 22 (20oct)"
+        },
+        {
+            "id": 2,
+            "checked": false,
+            "item": "Continue Re-Learning React (2 hours)"
+        },
+        {
+            "id": 3,
+            "checked": false,
+            "item": "learn testing in react, resource:\"https://www.youtube.com/watch?v=JBSUgDxICg8&ab_channel=PedroTech\""
+        }
+    ]
+}
