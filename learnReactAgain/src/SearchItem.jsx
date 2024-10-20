@@ -1,7 +1,9 @@
 import React from 'react'
 
 function SearchItem({search, setSearch}) {
-  return (
+ 
+ 
+    return (
     <form className='searchForm' onSubmit={(e)=>e.preventDefault()}>
         <label htmlFor="search">Search</label>
         <input type="text"
