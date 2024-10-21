@@ -36,7 +36,7 @@ function App() {
 
   useEffect(()=>{
      
-    const fetchItems=async()=>{
+    const fetchItems= async ()=>{
       try{
         const response = await fetch(API_URL)
         if(!response.ok) throw Error("Didn't receive expected data")
@@ -73,8 +73,8 @@ function App() {
       body: JSON.stringify(myNewItem)
     }
 
-    const result = await apiRequest(API_URL, postOptions) 
-    if(result) setFetchError(result)
+    const result = await apiRequest(API_URL, postOptions);
+    if(result) setFetchError(result);
   };
   const handleSubmmition = (e) => {
     e.preventDefault();
