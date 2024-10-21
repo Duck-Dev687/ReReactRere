@@ -1,53 +1,35 @@
-import {React, useState, useEffect} from 'react'
-import apiRequest2 from './apiRequest2'
+import React, { useEffect, useState } from 'react';
+import Form from './Form';
 
-function App() {
-    const API_URL_POSTS= "http://localhost:3500/posts"
-    const API_URL_COMMENTS= "http://localhost:3500/comments"
-    const API_URL_USERS= "http://localhost:3500/users"
+const App = () => {
+const API_URL= "https://jsonplaceholder.typicode.com/"
+const [reqType, setReqType] = useState('users');
+const [items, setItems] = useState([]);
 
-    const [items, setItems] = useState( [] );
-    const [fetchError, setFetchError]= useState(null);
-    const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(()=>{
-     
-        const fetchItems= async ()=>{
-          try{
-            const response = await fetch(API_URL)
-            if(!response.ok) throw Error("Didn't receive expected data")
-            const listItems = await response.json()
-            setItems(listItems)
-            setFetchError(null)
-          } catch(err){
-            setFetchError(err.message)
-          } finally{
-            setIsLoading(false)
-          }
+useEffect(()=>{
+
+    const fetchItems= async()=>{
+        try{
+            const response = await fetch(`${API_URL}${reqType}`)
+            const data = await response.json()
+            setItems(data)
+        } catch(err){
+            console.log(err)
         }
-        setTimeout(()=>{
-          (async () => await fetchItems())()
-        }, 2000)
-      },[])
-        
+    }
+
+    fetchItems();
+
+},[reqType])
 
   return (
     <>
-        <header>
-            <button onClick={()=>handleUsers}>Users</button>
-            <button onClick={()=>handlePosts}>Posts</button>
-            <button onClick={()=>handleComments}>Comments</button>
-        </header>
+    <Form reqType={reqType} setReqType={setReqType}/>
 
-        <main>
-            {!fetchError && isLoading? <p>Loading Items...</p> :
-            
-            <ul>{}</ul>
-
-            }
-        </main>
     </>
   )
-}
+};
 
-export default App
+export default App;
+
