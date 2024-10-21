@@ -102,10 +102,17 @@ function App() {
   };
 
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const listItems = items.filter((item) => id !== item.id);
     setItems(listItems);
+    const deleteOptions = {method: "Delete"}
+    const reqUrl = `${API_URL}/${id}`
+    const result = await apiRequest(reqUrl, deleteOptions)
+    if(result) setFetchError(result)
   };
+
+
+
   const filteredItems = items.filter((item) => 
     item.item.toLowerCase().includes(search.toLowerCase())
   );
