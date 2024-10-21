@@ -16,7 +16,7 @@ function Form({reqType, setReqType}) {
                 setReqType={setReqType}
             />
             <Button
-                buttonText="commentss"
+                buttonText="comments"
                 reqType={reqType}
                 setReqType={setReqType}
             />
