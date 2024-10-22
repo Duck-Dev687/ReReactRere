@@ -8,7 +8,7 @@ import NewPost from './Components/NewPost';
 import PostPage from './Components/PostPage';
 import About from './Components/About';
 import Missing from './Components/Missing';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 function App() {
   return (
