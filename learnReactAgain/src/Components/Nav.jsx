@@ -22,7 +22,6 @@ function Nav({search, setSearch}) {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/post">Posts</Link></li>
           <li><Link to="/about">About</Link></li>
-          <li><Link to="/"></Link></li>
         </ul>
       </nav>
     </>

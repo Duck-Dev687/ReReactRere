@@ -1,45 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import './index.css';
-import Header from './Components/Header';
-import Nav from './Components/Nav';
-import Footer from './Components/Footer';
 import Home from './Components/Home';
-import Feed from './Components/Feed';
-import Postss from './Components/Post';
 import NewPost from './Components/NewPost';
 import PostPage from './Components/PostPage';
 import About from './Components/About';
 import Missing from './Components/Missing';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns' 
+import Layout from './Components/Layout';
+import api from './api/posts'
 
 function App() {
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "My First Post",
-      datetime: "July 01, 2021 11:17:36 AM",
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!"
-    },
-    {
-      id: 2,
-      title: "My 2nd Post",
-      datetime: "July 01, 2021 11:17:36 AM",
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!"
-    },
-    {
-      id: 3,
-      title: "My 3rd Post",
-      datetime: "July 01, 2021 11:17:36 AM",
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!"
-    },
-    {
-      id: 4,
-      title: "My Fourth Post",
-      datetime: "July 01, 2021 11:17:36 AM",
-      body: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis consequatur expedita, assumenda similique non optio! Modi nesciunt excepturi corrupti atque blanditiis quo nobis, non optio quae possimus illum exercitationem ipsa!"
-    }
-  ])
+  const [posts, setPosts] = useState([])
   const [search, setSearch] = useState('')
   const [searchResults, setSearchResults] = useState([])
   // const [, set] = useState('')
@@ -77,12 +49,14 @@ function App() {
 
   return (
     <>
-      <Header title="My Blog" />
-      <Nav search={search} setSearch={setSearch}/>
       <Routes> {/* Change from Switch to Routes */}
-        <Route path='/' element={<Home posts={searchResults} />} /> 
+      <Route path='/' element={<Layout
+          search={search}
+          setSearch={searchResults}
+        />}>
+        <Route index path='/' element={<Home posts={searchResults} />} /> 
 
-        <Route path='/post' element={<NewPost
+        <Route index path='/post' element={<NewPost
         handleSubmit={handleSubmit}
         postTitle={postTitle}
         setPostTitle={setPostTitle}
@@ -95,8 +69,8 @@ function App() {
         <Route path='/about' element={<About />} />
         
         <Route path='/*' element={<Missing />} />
+        </Route>
       </Routes>
-      <Footer />
     </>
   );
 }
