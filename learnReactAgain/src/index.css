@@ -20,11 +20,12 @@ body {
 }
 
 #root {
+  flex-direction:column;
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} 
 
 .App {
   width: 100%;
