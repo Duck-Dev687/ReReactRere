@@ -14,7 +14,7 @@ function App() {
   return (
     <>
   <DataProvider>
-      <Routes> {/* Change from Switch to Routes */}
+      <Routes>
       <Route path='/' element={<Layout 
         />}>
         <Route index path='/' element={
